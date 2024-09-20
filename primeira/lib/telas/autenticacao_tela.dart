@@ -31,42 +31,68 @@ class _AutenticacaoTelaState extends State<AutenticacaoTela> {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Form(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Image.asset("assets/images/logo.png",height: 128),
-                  Text(
-                    "Gym_APP", 
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 48, 
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
+              child: Center(
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Image.asset("assets/images/logo.png",height: 128),
+                      Text(
+                        "Gym_APP", 
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 48, 
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(height: 32,),
+                      TextFormField(
+                        decoration: const InputDecoration(
+                          label: Text("E-mail"),)
+                      ),
+                      TextFormField(
+                        decoration: const InputDecoration(
+                          label: Text("Senha"),
+                        ),
+                        obscureText: true,
+                      ),
+                      Visibility(
+                        visible: !queroEntrar, 
+                        child: Column(
+                          children: [
+                            TextFormField(
+                              decoration: const InputDecoration(
+                                label: Text("Confirmação de Senha"),
+                              ),
+                              obscureText: true,
+                            ),
+                            TextFormField(
+                              decoration: const InputDecoration(
+                                label: Text("Nome"),
+                              ),
+                            ),
+                          ],
+                        ), 
+                      ),
+                      SizedBox(height: 16,),
+                      ElevatedButton(
+                        onPressed: (){},
+                        child: Text(queroEntrar ? "Entrar" : "Cadastrar"),
+                      ),
+                      Divider(),
+                      TextButton(
+                        onPressed: () {
+                          setState(() {
+                            queroEntrar = !queroEntrar;
+                          });
+                        },
+                        child: Text((queroEntrar) ? "Ainda não tem um conta? Cadastre-se!" : "Já tem uma conta? Entra"),
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 32,),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      label: Text("E-mail"),)
-                  ),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      label: Text("Senha"),
-                    ),
-                    obscureText: true,
-                  ),
-                  SizedBox(height: 16,),
-                  ElevatedButton(
-                    onPressed: (){},
-                    child: Text(queroEntrar ? "Entrar" : "Cadastrar"),
-                  ),
-                  Divider(),
-                  TextButton(
-                    onPressed: () {},
-                    child: const Text("Ainda não tem um conta? Cadastre-se!"),
-                  ),
-                ],
+                ),
               ),
             ),
           ),
