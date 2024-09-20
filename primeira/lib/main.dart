@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_primeiroapp/telas/autenticacao_tela.dart';
-import 'package:flutter_primeiroapp/telas/exe_tela.dart';
+//import 'package:flutter_primeiroapp/telas/exe_tela.dart';
 
 void main() {
   runApp(const MyApp());

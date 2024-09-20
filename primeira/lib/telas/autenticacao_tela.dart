@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_primeiroapp/_comum/minhas_cores.dart';
+import 'package:flutter_primeiroapp/componentes/stylo_campo_au.dart';
 
 class AutenticacaoTela extends StatefulWidget {
   const AutenticacaoTela({super.key});
@@ -10,6 +11,7 @@ class AutenticacaoTela extends StatefulWidget {
 
 class _AutenticacaoTelaState extends State<AutenticacaoTela> {
   bool queroEntrar = true;
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,6 +33,7 @@ class _AutenticacaoTelaState extends State<AutenticacaoTela> {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Form(
+              key: _formKey,
               child: Center(
                 child: SingleChildScrollView(
                   child: Column(
@@ -47,38 +50,74 @@ class _AutenticacaoTelaState extends State<AutenticacaoTela> {
                           color: Colors.white,
                         ),
                       ),
-                      SizedBox(height: 32,),
+                      const SizedBox(height: 32,),
                       TextFormField(
-                        decoration: const InputDecoration(
-                          label: Text("E-mail"),)
+                        decoration: getAuthenticationInputDecoration("E-mail"),
+                        validator: (String? value){
+                          if(value == null){
+                            return "E-mail é obrigatório";
+                          }
+                          if(value.length < 5){
+                            return "E-mail muito curto";
+                          }
+                          if(!value.contains("@")){
+                            return "E-mail inválido";
+                          }
+                          return null;
+                        },
                       ),
+                      const SizedBox(height: 8,),
                       TextFormField(
-                        decoration: const InputDecoration(
-                          label: Text("Senha"),
-                        ),
+                        decoration: getAuthenticationInputDecoration("Senha"),
                         obscureText: true,
+                        validator: (String? value){
+                          if(value == null){
+                            return "Senha é obrigatória";
+                          }
+                          if(value.length < 6){
+                            return "Senha muito curta";
+                          }
+                          return null;
+                        },
                       ),
                       Visibility(
                         visible: !queroEntrar, 
                         child: Column(
                           children: [
                             TextFormField(
-                              decoration: const InputDecoration(
-                                label: Text("Confirmação de Senha"),
-                              ),
+                              decoration:getAuthenticationInputDecoration("Confimar a Senha"),
                               obscureText: true,
+                              validator: (String? value){
+                                if(value == null){
+                                  return "Confirmação de senha é obrigatória";
+                                }
+                                if(value.length < 6){
+                                  return "Senha muito curta";
+                                }
+                                return null;
+                              },
                             ),
+                            const SizedBox(height: 8,),
                             TextFormField(
-                              decoration: const InputDecoration(
-                                label: Text("Nome"),
-                              ),
+                              decoration: getAuthenticationInputDecoration("Nome"),
+                              validator: (String? value){
+                                if(value == null){
+                                  return "Nome é obrigatório";
+                                }
+                                if(value.length < 3){
+                                  return "Nome muito curto";
+                                }
+                                return null;
+                              },
                             ),
                           ],
                         ), 
                       ),
                       SizedBox(height: 16,),
                       ElevatedButton(
-                        onPressed: (){},
+                        onPressed: (){
+                          botaoPrincipalClicado();
+                        },
                         child: Text(queroEntrar ? "Entrar" : "Cadastrar"),
                       ),
                       Divider(),
@@ -99,5 +138,12 @@ class _AutenticacaoTelaState extends State<AutenticacaoTela> {
         ],
       ),
     );
+  }
+  botaoPrincipalClicado(){
+    if(_formKey.currentState!.validate()){
+      print("Form Válido!");
+    }else{
+      print("Form Inválido!");
+    }
   }
 }
