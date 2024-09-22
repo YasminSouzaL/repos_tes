@@ -118,6 +118,14 @@ class _AutenticacaoTelaState extends State<AutenticacaoTela> {
                         onPressed: (){
                           botaoPrincipalClicado();
                         },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: MinhasCores.azulEscuro,
+                          foregroundColor: MinhasCores.branco,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(64),
+                          ),
+                          padding: EdgeInsets.symmetric(vertical: 16),
+                        ),
                         child: Text(queroEntrar ? "Entrar" : "Cadastrar"),
                       ),
                       Divider(),
