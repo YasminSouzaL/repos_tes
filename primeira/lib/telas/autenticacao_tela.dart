@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_primeiroapp/_comum/minhas_cores.dart';
 import 'package:flutter_primeiroapp/componentes/stylo_campo_au.dart';
+import 'package:flutter_primeiroapp/servico/auth_servico.dart';
 
 class AutenticacaoTela extends StatefulWidget {
   const AutenticacaoTela({super.key});
@@ -12,6 +13,13 @@ class AutenticacaoTela extends StatefulWidget {
 class _AutenticacaoTelaState extends State<AutenticacaoTela> {
   bool queroEntrar = true;
   final _formKey = GlobalKey<FormState>();
+  
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _senhaController = TextEditingController();
+  TextEditingController _nomeController = TextEditingController();
+  
+  AutenticacaoServico _autenticacaoServico = AutenticacaoServico();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,6 +60,7 @@ class _AutenticacaoTelaState extends State<AutenticacaoTela> {
                       ),
                       const SizedBox(height: 32,),
                       TextFormField(
+                        controller: _emailController,
                         decoration: getAuthenticationInputDecoration("E-mail"),
                         validator: (String? value){
                           if(value == null){
@@ -68,6 +77,7 @@ class _AutenticacaoTelaState extends State<AutenticacaoTela> {
                       ),
                       const SizedBox(height: 8,),
                       TextFormField(
+                        controller: _senhaController,
                         decoration: getAuthenticationInputDecoration("Senha"),
                         obscureText: true,
                         validator: (String? value){
@@ -99,6 +109,7 @@ class _AutenticacaoTelaState extends State<AutenticacaoTela> {
                             ),
                             const SizedBox(height: 8,),
                             TextFormField(
+                              controller: _nomeController,
                               decoration: getAuthenticationInputDecoration("Nome"),
                               validator: (String? value){
                                 if(value == null){
@@ -148,8 +159,23 @@ class _AutenticacaoTelaState extends State<AutenticacaoTela> {
     );
   }
   botaoPrincipalClicado(){
+    String email = _emailController.text;
+    String senha = _senhaController.text;
+    String nome = _nomeController.text;
+
     if(_formKey.currentState!.validate()){
-      print("Form Válido!");
+      if(queroEntrar){
+        print("Entrada valida");
+      }
+      else{
+        print("Cadastro valido");
+        print("${_emailController.text}, ${_senhaController.text}, ${_nomeController.text}");
+        _autenticacaoServico.cadastrarUsuario(
+          nome: nome, 
+          email: email, 
+          senha: senha,
+        );      
+      }
     }else{
       print("Form Inválido!");
     }
